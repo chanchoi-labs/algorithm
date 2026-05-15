@@ -92,7 +92,7 @@ class Graph_metrix():
 
             for next in range(1,n+1):
             
-                if graph[now][next]==1 and next not in visited:
+                if graph[now][next]==1 and next not in visited: # q갱신조건
                     dist_from_1[next] = dist_from_1[now] + 1
                     q.append(next)
                     visited.add(next)

@@ -42,10 +42,9 @@ class Mael():
 
             for (node, cost) in graph[now]:
                 # print(now, node, cost)
-                new_cost = distance[now] + cost
+                new_cost = distance[now] + cost 
 
-                if new_cost<distance[node]:
-                    # 갱신
+                if new_cost<distance[node]: # q 갱신조건
                     distance[node] = min(new_cost, distance[node])
                     q.append(node)
             
@@ -72,4 +71,11 @@ if __name__ == "__main__":
     test = Mael(5, [[1,2,1],[2,3,3],[5,2,2],[1,4,2],[5,3,1],[5,4,2]], 3)
     test.Dijkstra()
 
-    
+'''
+* 다익스트라 알고리즘 : q큐 갱신조건(=앞으로 나아가는 조건)이, 가중치값에 의존하는 경우 (즉, 간선에 가중치가 존재할 경우)
+
+[풀이]
+- 최소 가중치를 갱신해야하니, INF로 초기화해서 min값을 갱신해가면 된다. 
+- 최대 가중치를 갱신하려면, -1로 초기화해서 max값을 갱신해나가면 된다. 
+
+'''
