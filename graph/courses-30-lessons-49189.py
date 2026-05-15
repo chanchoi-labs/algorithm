@@ -11,7 +11,7 @@
 '''
 from collections import deque
 
-class Graph:
+class Graph_List:
     def __init__(self, n, edge):
         self.n = n
         self.edge = edge
@@ -59,10 +59,55 @@ class Graph:
         answer = dist_from_1.count(max(dist_from_1))
         return answer
 
+class Graph_metrix():
+    def __init__(self, n, edge):
+        self.n = n
+        self.edge = edge
+        
+        metrix = [[0 for _ in range(n+1)] for _ in range(n+1)]
+        self.metrix = metrix
 
+        for i,j in edge:
+            metrix[i][j]=1
+            metrix[j][i]=1
+        
+        print(metrix)
+
+    def bfs(self):
+        n = self.n
+        edge = self.edge
+        graph = self.metrix
+        
+        q = deque()
+        q.append(1)
+
+        visited = set()
+        visited.add(1)
+
+        dist_from_1 = [0 for i in range(n+1)] #[0,0,0,...,0]
+
+        while q:
+            now = q.popleft() #node
+
+
+            for next in range(1,n+1):
+            
+                if graph[now][next]==1 and next not in visited:
+                    dist_from_1[next] = dist_from_1[now] + 1
+                    q.append(next)
+                    visited.add(next)
+
+                    print('q: ', q)
+                    print('visited: ', visited)
+
+        print('dist_from_1 최종 :', dist_from_1)
+
+        answer = dist_from_1.count(max(dist_from_1))
+        return answer
+        
 def solution(n , edge):
-    g = Graph(n,edge)
-
+    # g = Graph_List(n,edge)
+    g = Graph_metrix(n,edge)
     return g.bfs()
 
 
@@ -70,4 +115,7 @@ def solution(n , edge):
 if __name__ == "__main__":
     n = 6
     edge = [[3, 6], [4, 3], [3, 2], [1, 3], [1, 2], [2, 4], [5, 2]]
-    solution(n, edge)
+    
+    
+    print('>> answer:', solution(n, edge))
+
