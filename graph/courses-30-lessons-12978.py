@@ -1,6 +1,9 @@
 # https://school.programmers.co.kr/learn/courses/30/lessons/12978
 # 다익스트라
 
+from collections import deque as dq
+
+
 class Mael():
 
     def __init__(self, N, road, K):
@@ -18,20 +21,55 @@ class Mael():
                 if r[1]==i:
                     self.graph[i].append((r[0],r[2]))
 
-        print(self.graph)
-                        
+        # print(self.graph)
+
+    def Dijkstra(self) :
+        N = self.N
+        K = self.K
+        graph = self.graph
+        
+        INF = int(1e9) # 최대로 초기화
+
+        q = dq()
+        q.append(1)
+
+        # 거리 테이블 (1에서부터 가는데 간선의 합의 최소만)
+        distance = [INF for _ in range(N+1)]
+        distance[1] = 0 
+
+        while(q):
+            now = q.popleft() # 현재 노드번호
+
+            for (node, cost) in graph[now]:
+                # print(now, node, cost)
+                new_cost = distance[now] + cost
+
+                if new_cost<distance[node]:
+                    # 갱신
+                    distance[node] = min(new_cost, distance[node])
+                    q.append(node)
+            
+                # print('q:', q)
+                # print('distance:', distance)
+
+            # print('--'*10)
+
+        answer = 0
+        for i in distance:
+            if K >= i: 
+                answer +=1
+
+        print('>> answer: ', answer)
+        return answer                        
             
 
-
 def solution(N, road, K):
-    answer = 0
-
-    # [실행] 버튼을 누르면 출력 값을 볼 수 있습니다.
-    print('Hello Python')
-
-    return answer
+    answer = Mael(N, road, K) # 객체선언
+    return answer.Dijkstra()
 
 # main
 if __name__ == "__main__":
-    m = Mael(5, [[1,2,1],[2,3,3],[5,2,2],[1,4,2],[5,3,1],[5,4,2]], 3)
+    test = Mael(5, [[1,2,1],[2,3,3],[5,2,2],[1,4,2],[5,3,1],[5,4,2]], 3)
+    test.Dijkstra()
 
+    
